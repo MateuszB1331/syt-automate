@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#1e1432" />
+
+    <!-- Primary Meta -->
+    <title>SYT&amp;Automate — Website, Automations &amp; Custom Apps for Small Businesses</title>
+    <meta name="description" content="One partner for your entire digital setup. We build websites, automations, and custom apps for small and medium businesses — fast, affordable, and actually maintained." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SYT&amp;Automate — Website, Automations &amp; Custom Apps" />
+    <meta property="og:description" content="One partner for your entire digital setup. Fast, affordable, actually maintained." />
+    <meta property="og:type" content="website" />
+
+    <!-- Fonts: Inter + Instrument Serif + Caveat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+
+    <!-- Netlify Forms detection (static form for Netlify crawler) -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <select name="business_type"></select>
+      <select name="need"></select>
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
