@@ -66,7 +66,7 @@ export default function AIQualifier() {
     } catch (err) {
       setIsLoading(false)
       setIsVisible(false)
-      setError('Something went wrong. Please try again or email kontakt@sytautomate.com directly.')
+      setError(`Error: ${err.message}`)
       console.error(err)
     }
   }
