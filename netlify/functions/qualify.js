@@ -35,7 +35,7 @@ export const handler = async (event) => {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-6',
       max_tokens: 1000,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: message.trim() }]
@@ -50,7 +50,7 @@ export const handler = async (event) => {
     console.error('Anthropic API error:', err)
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ error: err.message || 'Internal server error' })
     }
   }
 }

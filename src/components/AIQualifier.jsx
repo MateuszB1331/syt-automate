@@ -57,11 +57,10 @@ export default function AIQualifier() {
         body: JSON.stringify({ message: input.trim() })
       })
 
-      if (!res.ok) throw new Error(`API error ${res.status}`)
-
-      const { text } = await res.json()
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || `API error ${res.status}`)
       setIsLoading(false)
-      setResponse(text)
+      setResponse(data.text)
       setTimeout(() => setShowCta(true), 300)
 
     } catch (err) {
