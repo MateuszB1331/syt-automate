@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useReveal } from '../hooks/useReveal'
+import AIQualifier from '../components/AIQualifier'
 
 /* ─── Reveal wrapper ─────────────────────────────────── */
 function Reveal({ children, delay = 0, className = '' }) {
@@ -55,7 +56,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Floating "new clients" badge */}
       <div className="max-w-6xl mx-auto px-5 md:px-8 w-full">
         <div className="hero-item inline-flex items-center gap-2 mb-6">
           <span className="relative flex h-2 w-2">
@@ -65,12 +65,10 @@ function Hero() {
           <span className="text-sm font-medium text-cream/60">Now taking new clients</span>
         </div>
 
-        {/* Label */}
         <p className="hero-item text-sm font-medium text-cream/50 mb-4">
           Hey there, small business owner 👋
         </p>
 
-        {/* H1 */}
         <h1 className="hero-item font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight text-cream max-w-3xl"
           style={{ letterSpacing: '-0.02em' }}>
           One partner.<br />
@@ -78,13 +76,11 @@ function Hero() {
           &amp; custom apps.
         </h1>
 
-        {/* Subheadline */}
         <p className="hero-item mt-6 text-base md:text-lg text-cream/55 max-w-xl leading-relaxed">
           Stop juggling three different agencies. Get everything built and maintained
           by one person who actually understands your business. No jargon, no bloated retainers.
         </p>
 
-        {/* CTAs */}
         <div className="hero-item mt-8 flex flex-wrap gap-3 items-center">
           <Link to="/contact" className="btn-primary text-base px-6 py-3.5">
             Get a free digital audit
@@ -94,13 +90,11 @@ function Hero() {
           </Link>
         </div>
 
-        {/* Note */}
         <p className="hero-item mt-4 text-xs text-cream/35">
           ↑ 30-min call, zero obligation — promise
         </p>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-bounce">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-cream/30">
           <path d="M10 4v12M5 11l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -123,7 +117,6 @@ const SERVICES = [
     ),
     title: 'Website',
     body: 'Fast, beautiful, built to convert. Not just to exist on the internet.',
-    price: 'from $1,500',
   },
   {
     icon: (
@@ -133,7 +126,6 @@ const SERVICES = [
     ),
     title: 'Automations',
     body: 'Stop doing manually what n8n and AI can do in 90 seconds.',
-    price: 'from $1,500',
   },
   {
     icon: (
@@ -144,7 +136,6 @@ const SERVICES = [
     ),
     title: 'Custom app',
     body: 'Built for your exact operations. Like the system we built for an 11-location café chain.',
-    price: 'from $3,500',
   },
 ]
 
@@ -156,7 +147,7 @@ function Services() {
       </Reveal>
 
       <div className="grid md:grid-cols-3 gap-5 mt-2">
-        {SERVICES.map(({ icon, title, body, price }, i) => (
+        {SERVICES.map(({ icon, title, body }, i) => (
           <Reveal key={title} delay={i * 80}>
             <div className="card group h-full flex flex-col">
               <div className="w-11 h-11 rounded-xl bg-violet-t flex items-center justify-center text-violet mb-5">
@@ -164,7 +155,13 @@ function Services() {
               </div>
               <h3 className="font-serif text-xl text-navy mb-2">{title}</h3>
               <p className="text-sm text-navy/60 leading-relaxed flex-1">{body}</p>
-              <p className="mt-5 text-sm font-medium text-amber">{price}</p>
+              <Link
+                to="/contact"
+                className="mt-5 inline-flex items-center hover:opacity-75 transition-opacity"
+                style={{ fontSize: '13px', color: '#6d3fd1', fontWeight: 500 }}
+              >
+                Let's talk →
+              </Link>
             </div>
           </Reveal>
         ))}
@@ -179,11 +176,9 @@ function Services() {
 function CaseStudy() {
   return (
     <Section className="bg-navy relative overflow-hidden">
-      {/* Subtle grid */}
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
 
       <div className="relative grid md:grid-cols-2 gap-12 md:gap-20 items-start">
-        {/* Left */}
         <Reveal>
           <span className="section-label" style={{ color: 'rgba(201,170,255,0.5)', borderColor: 'transparent' }}>
             Real work, real results
@@ -215,7 +210,6 @@ function CaseStudy() {
           </ul>
         </Reveal>
 
-        {/* Right — results */}
         <Reveal delay={120}>
           <div className="bg-cream/5 border border-white/10 rounded-2xl p-7">
             <p className="text-xs font-medium tracking-widest uppercase text-cream/30 mb-5">Results</p>
@@ -267,7 +261,7 @@ const STEPS = [
   {
     n: '04',
     title: 'We maintain it',
-    body: 'Optional monthly retainer to keep everything running, updated, and improving. From $199/month.',
+    body: 'Optional monthly retainer to keep everything running, updated, and improving. Scoped after project delivery.',
   },
 ]
 
@@ -303,122 +297,53 @@ function HowItWorks() {
 /* ══════════════════════════════════════════════════════
    PRICING
 ══════════════════════════════════════════════════════ */
-const PACKAGES = [
-  {
-    name: 'Starter',
-    price: '$1,500',
-    tagline: 'Your business online, done right.',
-    includes: [
-      '5-page website (Framer or Next.js)',
-      'Mobile-responsive design',
-      'Contact form → email notification',
-      'Basic CMS for content updates',
-      '1 month of support included',
-    ],
-    addon: 'Maintenance from $199/month',
-    cta: 'Get started',
-    highlight: false,
-  },
-  {
-    name: 'Growth',
-    price: '$3,500',
-    tagline: 'Website + automations that work while you sleep.',
-    includes: [
-      'Everything in Starter',
-      'Up to 10 pages',
-      '2 custom automations (e.g. booking → CRM)',
-      'Integration with 1 tool (Calendly, Stripe…)',
-      '2 months of support included',
-    ],
-    addon: 'Maintenance from $450/month',
-    cta: 'Get started',
-    highlight: true,
-    badge: 'Most popular',
-  },
-  {
-    name: 'Custom System',
-    price: 'from $6,000',
-    tagline: 'Built exactly for your business operations.',
-    includes: [
-      'Everything in Growth',
-      'Custom web app (inventory, scheduling…)',
-      'Unlimited pages',
-      'Full automation suite',
-      '3 months of support included',
-    ],
-    addon: 'Maintenance from $800/month',
-    cta: 'Get started',
-    highlight: false,
-  },
-]
-
 function Pricing() {
   return (
     <Section className="bg-cream">
       <Reveal>
         <span className="section-label">Pricing</span>
         <h2 className="font-serif text-3xl md:text-4xl text-navy mt-2" style={{ letterSpacing: '-0.02em' }}>
-          Clear packages. No surprises.
+          Priced for your business.<br />Not for a Fortune 500.
         </h2>
       </Reveal>
 
-      <div className="mt-10 grid md:grid-cols-3 gap-5 items-start">
-        {PACKAGES.map(({ name, price, tagline, includes, addon, cta, highlight, badge }, i) => (
-          <Reveal key={name} delay={i * 80}>
-            <div className={`relative rounded-2xl p-7 flex flex-col h-full border transition-all
-              ${highlight
-                ? 'bg-navy text-cream border-violet shadow-xl shadow-violet/15'
-                : 'bg-cream-t text-navy border-navy/10'}`}>
-
-              {badge && (
-                <span className="absolute -top-3 left-7 text-xs font-medium bg-violet text-white px-3 py-1 rounded-full">
-                  {badge}
-                </span>
-              )}
-
-              <div className="mb-5">
-                <p className={`text-xs font-medium tracking-widest uppercase mb-2 ${highlight ? 'text-cream/40' : 'text-navy/40'}`}>
-                  {name}
-                </p>
-                <p className={`font-serif text-3xl ${highlight ? 'text-cream' : 'text-navy'}`}>{price}</p>
-                <p className={`text-sm mt-1 ${highlight ? 'text-cream/55' : 'text-navy/55'}`}>{tagline}</p>
-              </div>
-
-              <ul className="space-y-2.5 flex-1 mb-6">
-                {includes.map(item => (
-                  <li key={item} className={`flex items-start gap-2.5 text-sm ${highlight ? 'text-cream/70' : 'text-navy/65'}`}>
-                    <svg className={`shrink-0 mt-0.5 ${highlight ? 'text-violet-l' : 'text-violet'}`} width="15" height="15" viewBox="0 0 15 15" fill="none">
-                      <path d="M2.5 7.5l3.5 3.5 6.5-6.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <p className={`text-xs mb-5 ${highlight ? 'text-cream/35' : 'text-navy/35'}`}>{addon}</p>
-
-              <Link
-                to="/contact"
-                className={`w-full text-center py-3 rounded-full text-sm font-medium transition-all
-                  ${highlight
-                    ? 'bg-violet text-white hover:bg-violet-d'
-                    : 'border border-navy/20 text-navy hover:border-violet hover:text-violet'}`}
-              >
-                {cta}
-              </Link>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-
-      <Reveal delay={200}>
-        <div className="mt-8 text-center">
-          <p className="text-sm text-navy/55 mb-3">
-            Not sure which one you need? Book a free audit and we'll tell you honestly.
+      <Reveal delay={80}>
+        <div className="mt-8 max-w-2xl">
+          <p className="text-navy/60 text-base leading-relaxed">
+            Most small business websites don't need a $10,000 agency.<br />
+            Most automations don't need a six-week project.
           </p>
-          <Link to="/contact" className="btn-primary">
-            Book a free audit →
-          </Link>
+          <p className="mt-4 text-navy/60 text-base leading-relaxed">
+            We quote every project based on what it actually needs — nothing more,
+            nothing added to pad an invoice.
+          </p>
+
+          <div className="mt-6 space-y-2">
+            {[
+              'Simple websites start from $500.',
+              'Automations from $500.',
+              'Custom apps from $1,500.',
+            ].map(line => (
+              <p key={line} className="font-semibold text-navy text-base flex items-center gap-2">
+                <span className="text-violet">→</span>
+                {line}
+              </p>
+            ))}
+          </div>
+
+          <p className="mt-6 text-navy/60 text-base leading-relaxed">
+            Every quote is personalised — tell us what you need and we'll send you
+            an exact number within 24 hours.
+          </p>
+
+          <div className="mt-8 flex flex-col items-start gap-3">
+            <Link to="/contact" className="btn-primary">
+              Get your free quote →
+            </Link>
+            <p className="text-sm text-navy/45 italic">
+              Or use the AI tool above to find out exactly how we can help.
+            </p>
+          </div>
         </div>
       </Reveal>
     </Section>
@@ -537,6 +462,28 @@ export default function HomePage() {
     <>
       <Hero />
       <Services />
+
+      {/* Anchor copy — Change 3 */}
+      <div className="bg-cream">
+        <p style={{
+          textAlign: 'center',
+          fontStyle: 'italic',
+          fontSize: '14px',
+          color: '#7a6e85',
+          margin: '0 auto',
+          maxWidth: '400px',
+          padding: '0 20px 24px',
+        }}>
+          Most projects for small businesses start from $500.<br />
+          No hidden fees. No surprises. Personalised quote in 24h.
+        </p>
+      </div>
+
+      {/* AI Qualifier — Change 4 */}
+      <section className="bg-cream">
+        <AIQualifier />
+      </section>
+
       <CaseStudy />
       <HowItWorks />
       <Pricing />

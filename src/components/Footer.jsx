@@ -55,10 +55,10 @@ export default function Footer() {
         <div>
           <p className="text-xs font-medium tracking-widest uppercase text-cream/30 mb-4">Contact</p>
           <a
-            href="mailto:hello@sytautomate.com"
+            href="mailto:kontakt@sytautomate.com"
             className="text-sm text-violet-l hover:text-white transition-colors block mb-5"
           >
-            hello@sytautomate.com
+            kontakt@sytautomate.com
           </a>
           <p className="text-xs text-cream/30 leading-relaxed">
             Based in Poznań, Poland<br/>

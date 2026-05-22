@@ -94,7 +94,7 @@ export default function ServicesPage() {
             'SEO foundations (meta tags, sitemap, structured data)',
             '1 month of support after launch',
           ]}
-          price="Starting from $1,500"
+          price="Most small business websites: $500–$1,200. Larger builds quoted individually."
           deliver="Delivered in 5–10 days"
         />
 
@@ -111,7 +111,7 @@ export default function ServicesPage() {
             'Customer onboarding sequences',
             'Weekly/monthly report generation (automated)',
           ]}
-          price="Starting from $1,500"
+          price="Single automation workflows: from $500. Full pipeline systems quoted individually."
           deliver="Delivered in 3–7 days"
           reverse
         />
@@ -128,8 +128,8 @@ export default function ServicesPage() {
             'Internal dashboard for operations teams',
             'Custom booking systems with automated confirmations',
           ]}
-          price="Starting from $6,000"
-          deliver="Timeline: typically 2–6 weeks"
+          price="Custom apps from $1,500. Complex systems quoted after a free audit."
+          deliver="Timeline: 2–6 weeks."
         />
 
         <ServiceBlock
@@ -138,15 +138,42 @@ export default function ServicesPage() {
           body="Every project comes with an optional monthly retainer. We keep your site and systems running, make updates, add new automations as your business grows, and fix anything that breaks — fast."
           builtWith="Included with all projects"
           includes={[
-            'Starter: $199/month — hosting, monitoring, minor updates',
-            'Growth: $450/month — above + new automations, integrations, monthly review call',
-            'Custom: $800+/month — full ongoing development partner',
+            'Hosting, monitoring, and minor updates',
+            'Add automations and integrations as your business grows',
+            'Monthly review call available on higher tiers',
+            'Scope and pricing agreed after project delivery',
           ]}
-          price="From $199/month"
+          price="Retainer plans from $150/month."
           deliver="Ongoing"
           reverse
         />
       </Section>
+
+      {/* FAQ */}
+      <section className="py-16 bg-cream-t">
+        <div className="max-w-6xl mx-auto px-5 md:px-8">
+          <Reveal>
+            <span className="section-label">FAQ</span>
+            <h2 className="font-serif text-2xl md:text-3xl text-navy mt-2 mb-8" style={{ letterSpacing: '-0.02em' }}>
+              Common questions
+            </h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="max-w-2xl">
+              <div className="border-t border-navy/10 py-6">
+                <h3 className="font-medium text-navy mb-3">How much will my project cost?</h3>
+                <p className="text-sm text-navy/60 leading-relaxed">
+                  Honestly — it depends. A simple 5-page website for a café is very different from a custom
+                  inventory system for 11 locations. Rather than publish prices that might be way off for
+                  your situation, we give every client a personalised quote within 24 hours of hearing about
+                  their project. Most small business websites start from $500. Book a free audit or use the
+                  AI tool on this page to get a sense of what's involved.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="py-20 bg-cream-t">

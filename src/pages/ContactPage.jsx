@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal'
+import AIQualifier from '../components/AIQualifier'
 
 function Reveal({ children, delay = 0, className = '' }) {
   const [ref, visible] = useReveal()
@@ -62,6 +63,18 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* AI Qualifier */}
+      <section className="bg-cream">
+        <AIQualifier />
+      </section>
+
+      {/* Divider */}
+      <div className="flex items-center gap-4 my-8 max-w-2xl mx-auto px-4">
+        <div className="flex-1 h-px bg-violet-t" />
+        <p className="text-xs text-[#7a6e85] font-medium">or skip straight to the form</p>
+        <div className="flex-1 h-px bg-violet-t" />
+      </div>
+
       {/* Form section */}
       <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-6xl mx-auto px-5 md:px-8">
@@ -115,8 +128,8 @@ export default function ContactPage() {
 
               <div className="mt-10 pt-8 border-t border-navy/10">
                 <p className="text-xs font-medium tracking-widest uppercase text-navy/35 mb-2">Or email directly</p>
-                <a href="mailto:hello@sytautomate.com" className="text-sm font-medium text-violet hover:text-violet-d transition-colors">
-                  hello@sytautomate.com
+                <a href="mailto:kontakt@sytautomate.com" className="text-sm font-medium text-violet hover:text-violet-d transition-colors">
+                  kontakt@sytautomate.com
                 </a>
                 <p className="mt-1.5 text-xs text-navy/40">Based in Poznań, Poland · Working remotely worldwide</p>
               </div>
@@ -206,7 +219,7 @@ export default function ContactPage() {
                   {status === 'error' && (
                     <p className="text-xs text-red-500">
                       Something went wrong. Email us directly at{' '}
-                      <a href="mailto:hello@sytautomate.com" className="underline">hello@sytautomate.com</a>
+                      <a href="mailto:kontakt@sytautomate.com" className="underline">kontakt@sytautomate.com</a>
                     </p>
                   )}
 
