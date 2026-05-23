@@ -31,6 +31,14 @@ export const handler = async (event) => {
     return { statusCode: 400, body: 'Message too short' }
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'ANTHROPIC_API_KEY environment variable is not set' })
+    }
+  }
+
   try {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
