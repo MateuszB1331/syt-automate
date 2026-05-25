@@ -355,33 +355,90 @@ function Pricing() {
 ══════════════════════════════════════════════════════ */
 const TESTIMONIALS = [
   {
-    quote: "They built something in a week that I'd been trying to get another agency to start for 3 months.",
-    name: '[Client name]',
-    role: 'Owner, [Business name]',
+    quote: (
+      <>
+        Working with SYT&amp;Automate helped us{' '}
+        <strong>eliminate mountains of paperwork</strong>{' '}
+        — saving not just time, but stress and frustration. Work we used to do
+        by hand is now fully automated, which freed us up to focus on our next
+        business goals.
+      </>
+    ),
+    name: 'Artur',
+    role: 'Manager, Coffeers · Poland',
+    initial: 'A',
   },
   {
-    quote: "I finally stopped dreading Monday mornings. The automated reports just... appear.",
-    name: '[Client name]',
-    role: 'Manager, [Business name]',
+    quote: (
+      <>
+        Inventory checks were always our Achilles&apos; heel — mistakes,
+        recounts, products getting lost in the process. Everything only existed
+        on paper. Now <strong>everything lives in one app</strong>: we add new
+        products freely, access full inventory history, and export data to
+        spreadsheets in two clicks.
+      </>
+    ),
+    name: 'Dorota',
+    role: 'Operations, Kawiarnia u Baranków · Poland',
+    initial: 'D',
   },
 ]
 
 function Testimonials() {
   return (
-    <Section className="bg-cream-t">
+    <Section className="bg-cream">
       <Reveal>
-        <span className="section-label">What clients say</span>
+        <p style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#6d3fd1', marginBottom: '12px' }}>
+          What clients say
+        </p>
+        <h2 className="font-serif text-3xl md:text-4xl" style={{ letterSpacing: '-0.02em', color: '#1a1228' }}>
+          Real results. <em>Real businesses.</em>
+        </h2>
       </Reveal>
-      <div className="grid sm:grid-cols-2 gap-5 mt-4">
-        {TESTIMONIALS.map(({ quote, name, role }, i) => (
+
+      <div className="grid sm:grid-cols-2 gap-5 mt-8">
+        {TESTIMONIALS.map(({ quote, name, role, initial }, i) => (
           <Reveal key={i} delay={i * 100}>
-            <div className="bg-cream border border-navy/10 rounded-2xl p-7">
-              <p className="font-serif text-lg text-navy leading-snug mb-5">
-                &ldquo;{quote}&rdquo;
+            <div style={{
+              background: 'rgba(255,255,255,0.72)',
+              border: '1px solid rgba(180,160,220,0.25)',
+              borderRadius: '20px',
+              backdropFilter: 'blur(10px)',
+              padding: '28px',
+            }}>
+              {/* Stars */}
+              <div style={{ display: 'flex', gap: '3px', marginBottom: '14px' }}>
+                {[0,1,2,3,4].map(j => (
+                  <svg key={j} width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                ))}
+              </div>
+
+              {/* Large opening quote */}
+              <div style={{ fontFamily: 'Instrument Serif, serif', fontSize: '52px', lineHeight: '0.6', color: '#d4bfff', marginBottom: '10px' }}>
+                &ldquo;
+              </div>
+
+              {/* Quote text */}
+              <p style={{ fontStyle: 'italic', fontSize: '15px', color: '#1a1228', lineHeight: '1.75', marginBottom: '22px' }}>
+                {quote}
               </p>
-              <div>
-                <p className="text-sm font-medium text-navy">{name}</p>
-                <p className="text-xs text-navy/45 mt-0.5">{role}</p>
+
+              {/* Author */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{
+                  width: '36px', height: '36px', borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #c97b3a, #e8a87c)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'white', fontSize: '13px', fontWeight: 700, flexShrink: 0,
+                }}>
+                  {initial}
+                </div>
+                <div>
+                  <p style={{ fontSize: '13px', fontWeight: 600, color: '#1a1228', margin: 0 }}>{name}</p>
+                  <p style={{ fontSize: '12px', color: '#7a6e85', margin: '2px 0 0 0' }}>{role}</p>
+                </div>
               </div>
             </div>
           </Reveal>
