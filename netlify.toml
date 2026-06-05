@@ -13,6 +13,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/api/checklist-signup"
+  to = "/.netlify/functions/checklist-signup"
+  status = 200
+  force = true
+
 # SPA catch-all
 [[redirects]]
   from = "/*"

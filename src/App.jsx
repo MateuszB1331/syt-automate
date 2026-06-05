@@ -8,6 +8,7 @@ import WorkPage from './pages/WorkPage'
 import TemplatesPage from './pages/TemplatesPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
+import ChecklistPage from './pages/ChecklistPage'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -16,6 +17,17 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const { pathname } = useLocation()
+  const standalone = pathname === '/checklist'
+
+  if (standalone) {
+    return (
+      <Routes>
+        <Route path="/checklist" element={<ChecklistPage />} />
+      </Routes>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-cream text-navy overflow-x-hidden">
       <ScrollToTop />
