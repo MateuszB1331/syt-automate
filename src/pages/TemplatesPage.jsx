@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useReveal } from '../hooks/useReveal'
+import { useLanguage } from '../context/LanguageContext'
+import en from '../translations/en'
+import pl from '../translations/pl'
 
 function Reveal({ children, delay = 0, className = '' }) {
   const [ref, visible] = useReveal()
@@ -11,6 +14,9 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 export default function TemplatesPage() {
+  const { lang } = useLanguage()
+  const t = lang === 'pl' ? pl.templates : en.templates
+
   return (
     <>
       {/* Hero */}
@@ -18,13 +24,13 @@ export default function TemplatesPage() {
         <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 md:px-8">
           <Reveal>
-            <span className="section-label" style={{ color: 'rgba(201,170,255,0.4)', borderColor: 'transparent' }}>Templates</span>
+            <span className="section-label" style={{ color: 'rgba(201,170,255,0.4)', borderColor: 'transparent' }}>{t.heroLabel}</span>
             <h1 className="font-serif text-4xl md:text-6xl text-cream mt-3 max-w-2xl leading-tight" style={{ letterSpacing: '-0.02em' }}>
-              Ready-made automations.<br />
-              <span style={{ color: '#c9aaff' }}>Plug in and go.</span>
+              {t.heroH1a}<br />
+              <span style={{ color: '#c9aaff' }}>{t.heroH1b}</span>
             </h1>
             <p className="mt-5 text-cream/50 text-base leading-relaxed max-w-xl">
-              Pre-built n8n workflow templates from real client projects — documented and ready to import.
+              {t.heroSub}
             </p>
           </Reveal>
         </div>
@@ -40,16 +46,15 @@ export default function TemplatesPage() {
                   <path d="M13 3L4 14h8l-1 7 9-11h-8l1-7z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
-              <span className="text-xs font-semibold tracking-widest uppercase text-violet">Coming soon</span>
+              <span className="text-xs font-semibold tracking-widest uppercase text-violet">{t.comingSoon}</span>
               <h2 className="font-serif text-3xl md:text-4xl text-navy mt-3 mb-4" style={{ letterSpacing: '-0.02em' }}>
-                Templates are on their way.
+                {t.h2}
               </h2>
               <p className="text-navy/55 text-base leading-relaxed mb-8">
-                We're packaging our best automations into ready-to-use templates.
-                In the meantime, we build everything custom — and it costs less than you'd think.
+                {t.body}
               </p>
               <Link to="/contact" className="btn-primary">
-                Talk to us about automations →
+                {t.cta}
               </Link>
             </div>
           </Reveal>

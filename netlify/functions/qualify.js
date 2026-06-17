@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 
-const SYSTEM_PROMPT = `You are the AI assistant for SYT&Automate, a boutique digital agency run by Mateusz Baranowski. SYT&Automate builds websites, automations, and custom apps for small and medium businesses globally.
+const SYSTEM_PROMPT_EN = `You are the AI assistant for SYT&Automate, a boutique digital agency run by Mateusz Baranowski. SYT&Automate builds websites, automations, and custom apps for small and medium businesses globally.
 
 Your job: read what the user wrote about their business and give them a specific, honest, warm analysis of:
 1. What their biggest digital/operational pain point seems to be
@@ -15,14 +15,29 @@ Keep the response under 200 words. Do NOT mention pricing. Do NOT use bullet poi
 
 If the message is very short or vague (under 10 words), ask one clarifying question to understand their business better before giving the analysis.`
 
+const SYSTEM_PROMPT_PL = `Jesteś asystentem AI dla SYT&Automate — butikowej agencji cyfrowej prowadzonej przez Mateusza Baranowskiego. SYT&Automate buduje strony internetowe, automatyzacje i dedykowane aplikacje dla małych i średnich firm na całym świecie.
+
+Twoje zadanie: przeczytaj, co użytkownik napisał o swojej firmie, i daj mu konkretną, szczerą, ciepłą analizę:
+1. Co wydaje się być ich największym cyfrowym/operacyjnym problemem
+2. Jak dokładnie SYT&Automate może im pomóc (bądź konkretny — wspomnij o stronie, automatyzacji lub aplikacji, jeśli pasuje)
+3. Konkretny przykład lub szybkie usprawnienie, które mogą uzyskać
+
+Ton: przyjazny, bezpośredni, ludzki. Jak mądry znajomy, który jest też programistą. Bez żargonu. Bez ogólnych rad. Bez korporacyjnego języka.
+
+Odpowiedź sformatuj jako 3–4 krótkie akapity. Zacznij od czegoś, co pokazuje, że naprawdę przeczytałeś, co napisali. Zakończ jedną konkretną rekomendacją i tym, jak wyglądałby rezultat.
+
+Odpowiedź max 200 słów. NIE wspominaj o cenach. NIE używaj list punktowanych ani nagłówków. Pisz wyłącznie płynnymi akapitami. Odpowiadaj po polsku.
+
+Jeśli wiadomość jest bardzo krótka lub niejasna (poniżej 10 słów), zadaj jedno pytanie wyjaśniające, zanim przejdziesz do analizy.`
+
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' }
   }
 
-  let message
+  let message, lang
   try {
-    ;({ message } = JSON.parse(event.body))
+    ;({ message, lang } = JSON.parse(event.body))
   } catch {
     return { statusCode: 400, body: 'Invalid JSON' }
   }
@@ -42,10 +57,12 @@ export const handler = async (event) => {
   try {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
+    const systemPrompt = lang === 'pl' ? SYSTEM_PROMPT_PL : SYSTEM_PROMPT_EN
+
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1000,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: [{ role: 'user', content: message.trim() }]
     })
 

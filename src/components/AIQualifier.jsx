@@ -1,25 +1,11 @@
 import { useState, useRef } from 'react'
-
-const PROMPT_CHIPS = [
-  {
-    label: "I run a café / restaurant",
-    text: "I run a café with 2 locations. Every morning I manually check stock levels and update a spreadsheet, then write a summary for the owner. It takes about an hour each day and I keep making mistakes."
-  },
-  {
-    label: "I have a local service business",
-    text: "I run a hair salon. We take bookings by phone and WhatsApp, then manually add them to a calendar. Half the time we forget to send reminders and clients don't show up. We also don't have a proper website yet."
-  },
-  {
-    label: "I need a website",
-    text: "I've been running my business for 2 years but only have a Facebook page. I know I need a proper website but I don't know what it should include or how much it should cost."
-  },
-  {
-    label: "My follow-up process is a mess",
-    text: "I get enquiries through Instagram and email but I'm terrible at following up. By the time I reply, they've gone somewhere else. I need some kind of system but I don't know where to start."
-  }
-]
+import { useLanguage } from '../context/LanguageContext'
+import en from '../translations/en'
+import pl from '../translations/pl'
 
 export default function AIQualifier() {
+  const { lang } = useLanguage()
+  const t = (lang === 'pl' ? pl : en).ai
   const [input, setInput] = useState('')
   const [response, setResponse] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -54,7 +40,7 @@ export default function AIQualifier() {
       const res = await fetch('/api/qualify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input.trim() })
+        body: JSON.stringify({ message: input.trim(), lang })
       })
 
       const data = await res.json()
@@ -103,15 +89,14 @@ export default function AIQualifier() {
       <div className="mb-8">
         <p className="text-xs font-semibold tracking-widest uppercase text-violet flex items-center gap-2 mb-3">
           <span className="block w-5 h-px bg-violet" />
-          Not sure where to start?
+          {t.notSure}
         </p>
         <h2 className="font-serif text-4xl text-navy leading-tight mb-3">
-          Tell us about your business.<br />
-          <em className="italic text-violet">We'll tell you exactly how we can help.</em>
+          {t.heading}<br />
+          <em className="italic text-violet">{t.headingEm}</em>
         </h2>
         <p className="text-[#7a6e85] text-base leading-relaxed max-w-lg">
-          Type anything — what you do, what's taking up your time, what you wish
-          worked better. Our AI will give you a specific, honest answer.
+          {t.sub}
         </p>
       </div>
 
@@ -132,7 +117,7 @@ export default function AIQualifier() {
             value={input}
             onChange={e => { setInput(e.target.value); autoResize() }}
             onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && canSubmit) { e.preventDefault(); handleSubmit() }}}
-            placeholder="e.g. I run a café with 3 locations. Every morning I manually check stock across all of them and it takes forever..."
+            placeholder={t.placeholder}
             rows={2}
             maxLength={800}
             className="flex-1 bg-transparent border-none outline-none resize-none
@@ -145,7 +130,7 @@ export default function AIQualifier() {
         <div className="flex items-center justify-between mt-4 pt-4
                         border-t border-violet-t gap-3 flex-wrap">
           <div className="flex gap-2 flex-wrap">
-            {PROMPT_CHIPS.map(chip => (
+            {t.chips.map(chip => (
               <button
                 key={chip.label}
                 onClick={() => { setInput(chip.text); setTimeout(autoResize, 10) }}
@@ -167,7 +152,7 @@ export default function AIQualifier() {
                        disabled:opacity-40 disabled:cursor-default
                        transition-all duration-150"
           >
-            Analyse my business
+            {t.analyseBtn}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"/>
@@ -202,8 +187,8 @@ export default function AIQualifier() {
               </svg>
             </div>
             <div>
-              <p className="text-sm font-semibold text-navy">Mateusz @ SYT&amp;Automate</p>
-              <p className="text-xs text-[#7a6e85]">AI-powered analysis · based on your description</p>
+              <p className="text-sm font-semibold text-navy">{t.responseHeader}</p>
+              <p className="text-xs text-[#7a6e85]">{t.responseSubheader}</p>
             </div>
           </div>
 
@@ -232,8 +217,8 @@ export default function AIQualifier() {
             <div className="mt-5 pt-5 border-t border-violet-t
                             flex items-center justify-between gap-4 flex-wrap">
               <div>
-                <p className="text-sm font-semibold text-navy">Ready to talk specifics?</p>
-                <p className="text-sm text-[#7a6e85]">Book a free 30-min audit — no commitment, honest advice.</p>
+                <p className="text-sm font-semibold text-navy">{t.readyTitle}</p>
+                <p className="text-sm text-[#7a6e85]">{t.readyBody}</p>
               </div>
               <a
                 href="/contact"
@@ -241,7 +226,7 @@ export default function AIQualifier() {
                            rounded-full px-6 py-3 text-sm font-medium flex-shrink-0
                            hover:bg-violet-d transition-all duration-150 no-underline"
               >
-                Book a free audit
+                {t.ctaBtn}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"/>
@@ -260,7 +245,7 @@ export default function AIQualifier() {
                        underline underline-offset-2 transition-colors bg-transparent
                        border-none cursor-pointer font-sans"
           >
-            ← Ask something else
+            {t.reset}
           </button>
         )}
       </div>

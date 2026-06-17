@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from './Logo'
-
-const NAV_LINKS = [
-  { to: '/work',      label: 'Work'      },
-  { to: '/services',  label: 'Services'  },
-  { to: '/templates', label: 'Templates' },
-  { to: '/about',     label: 'About'     },
-]
+import { useLanguage } from '../context/LanguageContext'
+import en from '../translations/en'
+import pl from '../translations/pl'
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const { lang, setLang } = useLanguage()
+  const t = lang === 'pl' ? pl : en
+
+  const NAV_LINKS = [
+    { to: '/work',      label: t.nav.work      },
+    { to: '/services',  label: t.nav.services  },
+    { to: '/templates', label: t.nav.templates },
+    { to: '/about',     label: t.nav.about     },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -60,15 +65,40 @@ export default function Navigation() {
           ))}
         </nav>
 
-        {/* CTA + Hamburger */}
+        {/* CTA + Lang toggle + Hamburger */}
         <div className="flex items-center gap-3">
+          {/* Language toggle — desktop */}
+          <div className={`hidden md:flex items-center rounded-full p-0.5 text-xs font-semibold
+            ${onLight ? 'bg-navy/8' : 'bg-white/10'}`}>
+            <button
+              onClick={() => setLang('en')}
+              className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
+                lang === 'en'
+                  ? 'bg-violet text-white'
+                  : onLight ? 'text-navy/50 hover:text-navy' : 'text-cream/50 hover:text-cream'
+              }`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang('pl')}
+              className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
+                lang === 'pl'
+                  ? 'bg-violet text-white'
+                  : onLight ? 'text-navy/50 hover:text-navy' : 'text-cream/50 hover:text-cream'
+              }`}
+            >
+              PL
+            </button>
+          </div>
+
           <button
             onClick={handleCTA}
             className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium
               px-4 py-2 bg-violet text-white rounded-full
               hover:bg-violet-d transition-all duration-200 active:scale-95"
           >
-            Book a free audit →
+            {t.nav.cta}
           </button>
 
           <button
@@ -102,11 +132,34 @@ export default function Navigation() {
               {label}
             </Link>
           ))}
+          {/* Language toggle — mobile */}
+          <div className="flex items-center gap-2 pt-3 pb-1">
+            <span className="text-xs text-navy/40 font-medium">Language:</span>
+            <div className="flex items-center bg-navy/8 rounded-full p-0.5 text-xs font-semibold">
+              <button
+                onClick={() => setLang('en')}
+                className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
+                  lang === 'en' ? 'bg-violet text-white' : 'text-navy/50'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLang('pl')}
+                className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
+                  lang === 'pl' ? 'bg-violet text-white' : 'text-navy/50'
+                }`}
+              >
+                PL
+              </button>
+            </div>
+          </div>
+
           <button
             onClick={handleCTA}
             className="mt-4 w-full py-3 bg-violet text-white text-sm font-medium rounded-full"
           >
-            Book a free audit →
+            {t.nav.cta}
           </button>
         </div>
       )}

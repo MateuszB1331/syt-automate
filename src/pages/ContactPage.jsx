@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useReveal } from '../hooks/useReveal'
 import AIQualifier from '../components/AIQualifier'
+import { useLanguage } from '../context/LanguageContext'
+import en from '../translations/en'
+import pl from '../translations/pl'
 
 function Reveal({ children, delay = 0, className = '' }) {
   const [ref, visible] = useReveal()
@@ -12,6 +15,9 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 export default function ContactPage() {
+  const { lang } = useLanguage()
+  const t = lang === 'pl' ? pl.contact : en.contact
+
   const [status, setStatus] = useState('idle')
   const [form, setForm] = useState({
     name: '', email: '', business_type: '', need: '', message: '', 'bot-field': ''
@@ -50,14 +56,13 @@ export default function ContactPage() {
         <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-5 md:px-8">
           <Reveal>
-            <span className="section-label" style={{ color: 'rgba(201,170,255,0.4)', borderColor: 'transparent' }}>Contact</span>
+            <span className="section-label" style={{ color: 'rgba(201,170,255,0.4)', borderColor: 'transparent' }}>{t.heroLabel}</span>
             <h1 className="font-serif text-4xl md:text-6xl text-cream mt-3 max-w-2xl leading-tight" style={{ letterSpacing: '-0.02em' }}>
-              Let's talk about<br />
-              <span style={{ color: '#c9aaff' }}>your business.</span>
+              {t.heroH1a}<br />
+              <span style={{ color: '#c9aaff' }}>{t.heroH1b}</span>
             </h1>
             <p className="mt-5 text-cream/50 text-base leading-relaxed max-w-xl">
-              Send a message and we'll get back to you within 24 hours. No sales scripts,
-              no automated responses — you'll hear from us directly.
+              {t.heroSub}
             </p>
           </Reveal>
         </div>
@@ -71,7 +76,7 @@ export default function ContactPage() {
       {/* Divider */}
       <div className="flex items-center gap-4 my-8 max-w-2xl mx-auto px-4">
         <div className="flex-1 h-px bg-violet-t" />
-        <p className="text-xs text-[#7a6e85] font-medium">or skip straight to the form</p>
+        <p className="text-xs text-[#7a6e85] font-medium">{t.divider}</p>
         <div className="flex-1 h-px bg-violet-t" />
       </div>
 
@@ -83,55 +88,38 @@ export default function ContactPage() {
             {/* Left — info */}
             <Reveal>
               <h2 className="font-serif text-2xl md:text-3xl text-navy mb-4" style={{ letterSpacing: '-0.02em' }}>
-                Tell us about your business.
+                {t.formTitle}
               </h2>
               <p className="text-sm text-navy/55 leading-relaxed mb-8">
-                Fill in the form and we'll reply within 24 hours with honest thoughts on what
-                we'd build and roughly what it would cost. No pressure, no pitch deck.
+                {t.formSub}
               </p>
 
               <div className="space-y-5">
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-violet-t flex items-center justify-center shrink-0 mt-0.5">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-violet">
-                      <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                {[
+                  { title: t.promise1Title, sub: t.promise1Sub },
+                  { title: t.promise2Title, sub: t.promise2Sub },
+                  { title: t.promise3Title, sub: t.promise3Sub },
+                ].map(({ title, sub }) => (
+                  <div key={title} className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-violet-t flex items-center justify-center shrink-0 mt-0.5">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-violet">
+                        <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-navy">{title}</p>
+                      <p className="text-xs text-navy/45 mt-0.5">{sub}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-navy">Reply within 24 hours</p>
-                    <p className="text-xs text-navy/45 mt-0.5">Usually much sooner.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-violet-t flex items-center justify-center shrink-0 mt-0.5">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-violet">
-                      <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-navy">No newsletters, no spam</p>
-                    <p className="text-xs text-navy/45 mt-0.5">Just a real reply from Mateusz.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-full bg-violet-t flex items-center justify-center shrink-0 mt-0.5">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-violet">
-                      <path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-navy">Honest advice</p>
-                    <p className="text-xs text-navy/45 mt-0.5">If we're not the right fit, we'll say so.</p>
-                  </div>
-                </div>
+                ))}
               </div>
 
               <div className="mt-10 pt-8 border-t border-navy/10">
-                <p className="text-xs font-medium tracking-widest uppercase text-navy/35 mb-2">Or email directly</p>
+                <p className="text-xs font-medium tracking-widest uppercase text-navy/35 mb-2">{t.emailLabel}</p>
                 <a href="mailto:kontakt@sytautomate.com" className="text-sm font-medium text-violet hover:text-violet-d transition-colors">
                   kontakt@sytautomate.com
                 </a>
-                <p className="mt-1.5 text-xs text-navy/40">Based in Poznań, Poland · Working remotely worldwide</p>
+                <p className="mt-1.5 text-xs text-navy/40">{t.location}</p>
               </div>
             </Reveal>
 
@@ -144,8 +132,8 @@ export default function ContactPage() {
                       <path d="M4 12l5.5 5.5L20 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <p className="font-serif text-xl text-navy">Message sent ✓</p>
-                  <p className="text-sm text-navy/55 mt-2">We'll be in touch within 24 hours.</p>
+                  <p className="font-serif text-xl text-navy">{t.successTitle}</p>
+                  <p className="text-sm text-navy/55 mt-2">{t.successSub}</p>
                 </div>
               ) : (
                 <form
@@ -163,62 +151,54 @@ export default function ContactPage() {
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-navy/50 mb-1.5">Name *</label>
+                      <label className="block text-xs font-medium text-navy/50 mb-1.5">{t.labelName}</label>
                       <input
                         type="text" name="name" required
                         value={form.name} onChange={handleChange}
-                        placeholder="Your name"
+                        placeholder={t.placeholderName}
                         className={inputClass}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-navy/50 mb-1.5">Email *</label>
+                      <label className="block text-xs font-medium text-navy/50 mb-1.5">{t.labelEmail}</label>
                       <input
                         type="email" name="email" required
                         value={form.email} onChange={handleChange}
-                        placeholder="your@email.com"
+                        placeholder={t.placeholderEmail}
                         className={inputClass}
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-navy/50 mb-1.5">Business type</label>
+                    <label className="block text-xs font-medium text-navy/50 mb-1.5">{t.labelBizType}</label>
                     <select name="business_type" value={form.business_type} onChange={handleChange} className={inputClass}>
-                      <option value="">Select...</option>
-                      <option>Café / Restaurant</option>
-                      <option>Retail</option>
-                      <option>Salon</option>
-                      <option>Service business</option>
-                      <option>SaaS / Tech</option>
-                      <option>Other</option>
+                      <option value="">{t.selectDefault}</option>
+                      {t.bizTypes.map(opt => <option key={opt}>{opt}</option>)}
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-navy/50 mb-1.5">What do you need?</label>
+                    <label className="block text-xs font-medium text-navy/50 mb-1.5">{t.labelNeed}</label>
                     <select name="need" value={form.need} onChange={handleChange} className={inputClass}>
-                      <option value="">Select...</option>
-                      <option>Website</option>
-                      <option>Automation</option>
-                      <option>Custom app</option>
-                      <option>Not sure yet</option>
+                      <option value="">{t.selectDefault}</option>
+                      {t.needs.map(opt => <option key={opt}>{opt}</option>)}
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-navy/50 mb-1.5">Tell us a bit more</label>
+                    <label className="block text-xs font-medium text-navy/50 mb-1.5">{t.labelMore}</label>
                     <textarea
                       name="message" rows={5}
                       value={form.message} onChange={handleChange}
-                      placeholder="Tell us about your business and what you're looking to build or automate..."
+                      placeholder={t.placeholderMessage}
                       className={`${inputClass} resize-none`}
                     />
                   </div>
 
                   {status === 'error' && (
                     <p className="text-xs text-red-500">
-                      Something went wrong. Email us directly at{' '}
+                      {t.errorMsg}{' '}
                       <a href="mailto:kontakt@sytautomate.com" className="underline">kontakt@sytautomate.com</a>
                     </p>
                   )}
@@ -229,11 +209,11 @@ export default function ContactPage() {
                     className="w-full py-3.5 bg-violet text-white text-sm font-medium rounded-full
                       hover:bg-violet-d transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {status === 'sending' ? 'Sending...' : 'Send message →'}
+                    {status === 'sending' ? t.sending : t.sendBtn}
                   </button>
 
                   <p className="text-xs text-navy/35 text-center">
-                    We reply within 24 hours. No newsletters, no spam.
+                    {t.footerNote}
                   </p>
                 </form>
               )}
